@@ -183,6 +183,73 @@
 
     .stumble .label { color: var(--sub); font-weight: 700; }
 
+    .faq-intro {
+      background: var(--accent-soft);
+      border-radius: 0.7rem;
+      padding: 0.8rem 0.95rem;
+      margin-top: 1rem;
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 0.7rem;
+      margin-top: 0.8rem;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      font-weight: 700;
+      padding: 0.85rem 1rem;
+      color: var(--accent);
+      background: #faf9f6;
+    }
+
+    .faq-item[open] summary { border-bottom: 1px solid var(--line); }
+
+    .faq-answer { padding: 0.1rem 1rem 1rem; }
+
+    .faq-answer h3 { margin-top: 0.9rem; }
+
+    .answer-lead {
+      font-size: 1.03rem;
+      font-weight: 700;
+    }
+
+    .term-note {
+      background: #f0ede6;
+      border-left: 4px solid var(--accent);
+      padding: 0.65rem 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .prompt {
+      display: block;
+      white-space: normal;
+      padding: 0.65rem 0.8rem;
+      line-height: 1.65;
+    }
+
+    .faq-shot {
+      margin: 1rem 0 0;
+      padding: 0.7rem;
+      border: 1px solid var(--line);
+      border-radius: 0.7rem;
+    }
+
+    .faq-shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0.4rem;
+    }
+
+    .faq-shot figcaption {
+      color: var(--sub);
+      font-size: 0.86rem;
+      margin-top: 0.45rem;
+    }
+
     .warn {
       background: var(--warn-bg);
       border: 1px solid var(--warn-line);
@@ -215,7 +282,7 @@
   <header>
     <div class="wrap">
       <h1>学習の振り返り</h1>
-      <p>バイブコーディング学習ノート ／ 成果と共通ナレッジの公開用まとめ</p>
+      <p>バイブコーディング学習ノート ／ 成果・初心者FAQ・共通ナレッジの公開用まとめ</p>
     </div>
   </header>
 
@@ -230,9 +297,193 @@
     <nav class="category-filter" aria-label="カテゴリーで絞り込む">
       <button class="category-chip is-active" data-category="all">すべて</button>
       <button class="category-chip" data-category="outputs">📂 成果物</button>
+      <button class="category-chip" data-category="faq">❓ 初心者FAQ</button>
       <button class="category-chip" data-category="knowledge">📂 共通ナレッジ</button>
       <button class="category-chip" data-category="steps">📂 ステップ別学習</button>
     </nav>
+
+    <section class="card" data-category="faq">
+      <h2><span>初心者FAQ：エージェントに確認して分かったこと</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <p class="faq-intro">実際に迷った内容を「問 → 回答 → 理由」の順で整理しています。確認手順を上から1つずつ試してください。画面キャプチャは、文章だけではクリック場所や表示を判別しにくい項目に限って追加します。</p>
+
+        <details class="faq-item">
+          <summary>問1：チャットを始めるたびに「バイブコーディングマスター」フォルダを指定する必要がありますか？</summary>
+          <div class="faq-answer">
+            <h3>回答</h3>
+            <p class="answer-lead">毎回チャットへフォルダ名を書く必要はありません。Cursorで作業フォルダとして一度開き、そのウィンドウ内でチャットします。</p>
+            <h3>理由</h3>
+            <p>エージェントは、Cursorで現在開いているワークスペースを基準にファイルを探します。フォルダを開かずに始めると、対象ファイルや保存先を正しく判断できません。</p>
+            <h3>確認手順</h3>
+            <ol>
+              <li>Cursorの「File → Open Folder」で <code>バイブコーディングマスター</code> を開く</li>
+              <li>左側に <code>docs</code>、<code>projects</code>、<code>学習の振り返り</code> が見えることを確認する</li>
+              <li>同じウィンドウのチャットで対象ファイルを伝える</li>
+            </ol>
+            <h3>成功の目印</h3>
+            <p>エージェントが対象ファイルを追加説明なしで読み取れ、意図したフォルダ内だけを扱える。</p>
+            <p class="term-note"><strong>専門用語：</strong>ワークスペース＝Cursorで現在開いている作業フォルダ。</p>
+            <h3>関連プロンプト</h3>
+            <code class="prompt">現在開いているワークスペースと対象フォルダを確認して。まだファイルは変更しないで。</code>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>問2：白い大きなチャット画面から、黒いエディタ画面に変わったのはなぜですか？</summary>
+          <div class="faq-answer">
+            <h3>回答</h3>
+            <p class="answer-lead">フォルダを開いたことや、チャット中心画面から通常のIDEレイアウトへ切り替わったことが主な理由です。不具合とは限りません。</p>
+            <h3>理由</h3>
+            <p>Cursorには、チャットを大きく表示する画面と、ファイル一覧・エディタ・チャットを同時に表示する画面があります。また、テーマ設定によって背景色も変わります。</p>
+            <h3>確認手順</h3>
+            <ol>
+              <li>左側にファイル一覧が表示されているか確認する</li>
+              <li>開いているフォルダ名が目的のワークスペースか確認する</li>
+              <li>作業ファイルとチャットを一緒に使う場合は、そのまま通常画面で進める</li>
+            </ol>
+            <h3>成功の目印</h3>
+            <p>左のファイルを選ぶと中央で開き、同じ画面内のチャットからそのファイルについて質問できる。</p>
+            <p class="term-note"><strong>専門用語：</strong>IDE＝ファイル編集、ターミナル、AIチャットなどを一つにまとめた開発環境。</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>問3：GitをインストールしてCursorを開き直したのに、gitコマンドが見つからないのはなぜですか？</summary>
+          <div class="faq-answer">
+            <h3>回答</h3>
+            <p class="answer-lead">Git本体が入っていても、起動中のCursorが古いPATHを引き継いでいることがあります。Cursorを完全終了して再起動し、それでも直らなければWindowsをサインアウトまたは再起動します。</p>
+            <h3>理由</h3>
+            <p>Gitのインストーラーは通常、Gitの場所をWindowsのPATHへ追加します。ただし、すでに動いているアプリには新しい環境変数が自動反映されない場合があります。</p>
+            <h3>確認手順</h3>
+            <ol>
+              <li>Cursorのすべてのウィンドウを閉じ、バックグラウンドにも残っていない状態にする</li>
+              <li>Cursorを起動し直して、新しいターミナルを開く</li>
+              <li><code>git --version</code> を実行する</li>
+              <li>認識されなければWindowsをサインアウトまたは再起動する</li>
+            </ol>
+            <h3>成功の目印</h3>
+            <p><code>git version 2.55.0.windows.3</code> のようにバージョン番号が表示される。</p>
+            <p class="term-note"><strong>専門用語：</strong>PATH＝コマンドの実体をWindowsが探すフォルダ一覧。</p>
+            <h3>関連プロンプト</h3>
+            <code class="prompt">Git本体の有無、インストール先、WindowsのPATH、現在のCursorが読み込んでいるPATHを確認して。設定はまだ変更しないで。</code>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>問4：エディタに内容が見えるのに、GitHubにファイルがないのはなぜですか？</summary>
+          <div class="faq-answer">
+            <h3>回答</h3>
+            <p class="answer-lead">画面に表示されているだけで、ファイルとして保存されていない可能性があります。まず <code>Ctrl + S</code> で保存します。</p>
+            <h3>理由</h3>
+            <p>エディタ上の未保存内容、PCに保存されたファイル、Gitの履歴、GitHub上のファイルはそれぞれ別の状態です。保存前の内容はGitから見えません。</p>
+            <h3>確認手順</h3>
+            <ol>
+              <li><code>Ctrl + S</code> で保存する</li>
+              <li>対象フォルダで <code>git status</code> を実行する</li>
+              <li>変更が表示されたら <code>git add</code>、<code>git commit</code>、<code>git push</code> の順で進める</li>
+            </ol>
+            <h3>成功の目印</h3>
+            <p><code>git status</code> に対象ファイルが表示され、push後にGitHub上でも確認できる。</p>
+            <p class="term-note"><strong>専門用語：</strong>保存＝編集中の内容をPC上のファイルへ書き込むこと。push＝記録済みの変更をGitHubへ送ること。</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>問5：変更したのに、git commitで「nothing to commit」と表示されるのはなぜですか？</summary>
+          <div class="faq-answer">
+            <h3>回答</h3>
+            <p class="answer-lead"><code>git add</code> が済んでいないか、変更が保存されていない可能性があります。<code>git status</code> で状態を確認します。</p>
+            <h3>理由</h3>
+            <p>commitは、変更されたすべてのファイルではなく、先にaddで選ばれた変更を記録します。</p>
+            <h3>確認手順</h3>
+            <ol>
+              <li>ファイルを保存する</li>
+              <li><code>git status</code> で対象ファイルを確認する</li>
+              <li><code>git add ファイル名</code> を実行する</li>
+              <li>もう一度commitする</li>
+            </ol>
+            <h3>成功の目印</h3>
+            <p>commit結果に変更されたファイル数や追加・削除行数が表示される。</p>
+            <p class="term-note"><strong>専門用語：</strong>add＝次のcommitへ含める変更を選ぶこと。commit＝選んだ変更を履歴へ記録すること。</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>問6：cdを実行したら「パスが見つからない」と表示されるのはなぜですか？</summary>
+          <div class="faq-answer">
+            <h3>回答</h3>
+            <p class="answer-lead">すでに目的のフォルダ内にいるのに、同じ移動を繰り返している可能性があります。先に現在地を確認します。</p>
+            <h3>理由</h3>
+            <p>相対パスの <code>cd projects/01-profile-site</code> は「今いる場所から、その下へ移動する」という命令です。同じ場所で繰り返すと、存在しない二重のパスを探します。</p>
+            <h3>確認手順</h3>
+            <ol>
+              <li>PowerShellの行頭に表示される現在地を見る</li>
+              <li><code>pwd</code> を実行して現在地を確認する</li>
+              <li>目的地にすでにいる場合は、cdを実行せず次の操作へ進む</li>
+            </ol>
+            <h3>成功の目印</h3>
+            <p>現在地の末尾が目的のフォルダ名になり、次のコマンドが正しい対象で動く。</p>
+            <p class="term-note"><strong>専門用語：</strong>相対パス＝現在地を基準にした行き先。絶対パス＝ドライブ名から始まる場所全体の住所。</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>問7：git pushに成功したのに、公開ページが変わらないのはなぜですか？</summary>
+          <div class="faq-answer">
+            <h3>回答</h3>
+            <p class="answer-lead">GitHub Pagesの反映待ちか、ブラウザに古い表示が残っている可能性があります。push成功を確認し、数分待って強制再読み込みします。</p>
+            <h3>理由</h3>
+            <p>pushはGitHubへ履歴を送る処理です。その後、GitHub Pagesが公開用ページを作り直すため、表示まで時間差があります。</p>
+            <h3>確認手順</h3>
+            <ol>
+              <li>push結果に <code>main -&gt; main</code> があるか確認する</li>
+              <li>GitHub上の対象ファイルが更新されているか確認する</li>
+              <li>1〜数分待つ</li>
+              <li><code>Ctrl + F5</code> で強制再読み込みする</li>
+            </ol>
+            <h3>成功の目印</h3>
+            <p>GitHub上のファイルと公開ページの両方に新しい内容が表示される。</p>
+            <p class="term-note"><strong>専門用語：</strong>キャッシュ＝表示を速くするためブラウザが一時保存した古いデータ。</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>問8：BRIEFの「画面」と「操作」は、どう分ければよいですか？</summary>
+          <div class="faq-answer">
+            <h3>回答</h3>
+            <p class="answer-lead">画面には「見える物」を名詞で、操作には「何をすると、どうなるか」を動詞で書きます。</p>
+            <h3>理由</h3>
+            <p>部品と動作を分けると、作る対象と期待する結果が明確になり、エージェントの実装ずれを減らせます。</p>
+            <h3>確認手順</h3>
+            <ol>
+              <li>写真に写るものは「画面」へ書く</li>
+              <li>指やマウスを動かして起きることは「操作」へ書く</li>
+              <li>一つの文に混ざっていたら、部品と動作の2文に分ける</li>
+            </ol>
+            <h3>成功の目印</h3>
+            <p>「画面：追加ボタン」「操作：追加ボタンを押すと一覧に商品が増える」のように対応している。</p>
+            <p class="term-note"><strong>専門用語：</strong>BRIEF＝実装前に目的、画面、操作、完了条件、やらないことを決める短い仕様書。</p>
+            <h3>関連プロンプト</h3>
+            <code class="prompt">BRIEFの「画面」と「操作」を分けて整理して。画面は見える物、操作はやること→結果。実装はまだしないで。</code>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="card" data-category="outputs">
+      <h2><span>2026-07-19の成果：初心者FAQ機能</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <p class="meta">2026-07-19 ／ 実際につまずいた内容を「問→回答→理由→確認手順→成功の目印→専門用語」で残すFAQを追加した。</p>
+        <ul>
+          <li>カテゴリー: ❓ 初心者FAQ（8件掲載）</li>
+          <li>検索: カテゴリー絞り込み＋FAQ内キーワード検索</li>
+          <li>画面キャプチャ置き場: <code>assets/faq/</code>（秘密情報なしのときだけ）</li>
+          <li>ルール: 日次ログ（詳細）とこのサイト（一般化）の両方へ蓄積</li>
+        </ul>
+        <h3>成功の目印</h3>
+        <p>「初心者FAQ」を選ぶとFAQだけが表示され、キーワードで質問・回答・用語を横断検索できる。</p>
+      </div>
+    </section>
 
     <section class="card" data-category="outputs">
       <h2><span>2026-07-19の成果：買い物候補ノート</span><span class="mark">＋</span></h2>
@@ -535,12 +786,17 @@
           <tbody>
             <tr><td>学習ガイド</td><td><code>docs/</code></td></tr>
             <tr><td>日次の学び</td><td><code>docs/learning-log/日付.md</code></td></tr>
+            <tr><td>つまずきFAQ（詳細・ローカル）</td><td>同日の日次ログ内「エージェントへ確認した内容」</td></tr>
+            <tr><td>初心者FAQ（検索用）</td><td>このサイトの「初心者FAQ」カテゴリー</td></tr>
+            <tr><td>FAQ用画面キャプチャ</td><td><code>学習の振り返り/assets/faq/</code></td></tr>
             <tr><td>振り返りサイト</td><td><code>学習の振り返り/</code>（明示依頼時は個別公開可）</td></tr>
             <tr><td>実践課題</td><td><code>projects/番号-英語名/</code></td></tr>
             <tr><td>課題の仕様／振り返り</td><td>各課題の <code>BRIEF.md</code> / <code>RETROSPECTIVE.md</code></td></tr>
           </tbody>
         </table>
         <p>フォルダ名は英語、説明文は日本語。新しいチャットでも <code>.cursor/rules/</code> のルールが自動適用される。</p>
+        <h3>日々のFAQ蓄積</h3>
+        <p>エージェントへ確認して解決したつまずきは、その日のうちに日次ログ（詳細）とこのサイトの初心者FAQ（一般化）の両方へ残す。形式は「問 → 回答 → 理由 → 確認手順 → 成功の目印 → 専門用語」。</p>
       </div>
     </section>
 
@@ -548,10 +804,10 @@
       <h2><span>学習終了時の一言テンプレ</span><span class="mark">＋</span></h2>
       <div class="body">
         <h3>基本版</h3>
-        <p><code>今日の学びを蓄積して。今日実施したこと、学んだ用語、つまずいた症状・原因・解決方法、成功を判断した表示、効いた指示、初心者向け補足、次回の1手を、日付ごとの学習ログとローカル専用の振り返りサイトに追記して。秘密情報や個人情報は記録・公開しないで。GitHubへのpushはしないで。</code></p>
+        <p><code>今日の学びを蓄積して。今日実施したこと、学んだ用語、つまずいてエージェントへ確認した内容（問・回答・理由・確認手順・成功の目印・専門用語）、効いた指示、初心者向け補足、次回の1手を、日付ごとの学習ログと振り返りサイトの初心者FAQに追記して。秘密情報や個人情報は記録・公開しないで。GitHubへのpushはしないで。</code></p>
 
         <h3>短縮版</h3>
-        <p><code>今日の学びを、秘密情報を除いて日次ログとローカル振り返りサイトに蓄積して。GitHubには上げないで。</code></p>
+        <p><code>今日の学びを、秘密情報を除いて日次ログと振り返りサイトに蓄積して。つまずきは初心者FAQ形式でも残して。GitHubには上げないで。</code></p>
 
         <h3>公開成果もある場合</h3>
         <p><code>今日の学びをローカルに蓄積して。公開してよい成果物だけ、個人情報・秘密情報がないことを確認してからGitHubに反映して。学習履歴そのものは公開しないで。</code></p>
@@ -603,6 +859,11 @@
         const matchesKeyword = !q || card.textContent.toLowerCase().includes(q);
         const visible = matchesCategory && matchesKeyword;
         card.classList.toggle('hidden', !visible);
+        card.querySelectorAll('.faq-item').forEach((item) => {
+          const itemMatches = !q || item.textContent.toLowerCase().includes(q);
+          item.classList.toggle('hidden', !itemMatches);
+          if (q && itemMatches) item.open = true;
+        });
         if (visible && q) {
           card.classList.remove('closed');
           card.querySelector('.mark').textContent = '−';
