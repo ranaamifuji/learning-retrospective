@@ -235,6 +235,23 @@
     </nav>
 
     <section class="card" data-category="outputs">
+      <h2><span>2026-07-19の成果：買い物候補ノート</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <p class="meta">2026-07-19 ／ BRIEFの画面と操作を分けてから、CRUD＋ステータス管理の買い物ノートを作った。</p>
+        <ul>
+          <li>作ったもの: 追加・編集・削除、比較、購入済／下書きへの移管ができる買い物候補ノート</li>
+          <li>保存: ブラウザの localStorage。リスト追加日・購入日は自動記録</li>
+          <li>追加機能: 商品URL、購入時メモ、4種ステータス</li>
+          <li>保存場所: <code>projects/03-local-crud/</code>（ローカルのみ）</li>
+        </ul>
+        <h3>成功の目印</h3>
+        <p>追加・編集・削除、購入完了→購入済、購入不要→下書き、再読み込み後もデータが残ることを確認。</p>
+        <h3>効いた指示</h3>
+        <p><code>projects/03-local-crud の BRIEF.md を読んで実装して。CRUD と再読み込み後の保存を完了条件どおりに。やらないことは作らない。</code></p>
+      </div>
+    </section>
+
+    <section class="card" data-category="outputs">
       <h2><span>2026-07-19の成果：問い合わせ対応 ○×クイズ</span><span class="mark">＋</span></h2>
       <div class="body">
         <p class="meta">2026-07-19 ／ BRIEFを先に書き、JavaScriptで画面が変わる全5問の○×クイズを作った。</p>
@@ -259,6 +276,18 @@
     </section>
 
     <section class="card" data-category="outputs">
+      <h2><span>2026-07-19の成果：振り返りサイト公開</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <p class="meta">2026-07-19 ／ カテゴリー検索付きの振り返りノートを個別リポジトリで公開した。</p>
+        <ul>
+          <li>公開URL: <a href="https://ranaamifuji.github.io/learning-retrospective/">https://ranaamifuji.github.io/learning-retrospective/</a></li>
+          <li>リポジトリ: <a href="https://github.com/ranaamifuji/learning-retrospective">learning-retrospective</a></li>
+          <li>含めないもの: 日次詳細ログ、パスワード、認証コード、実メール、APIキー</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card" data-category="outputs">
       <h2><span>2026-07-18の成果：自己紹介サイト</span><span class="mark">＋</span></h2>
       <div class="body">
         <p class="meta">2026-07-18 ／ プログラミング未経験から、Cursorで自己紹介サイトを作り、GitHub Pagesで公開した。</p>
@@ -272,6 +301,17 @@
     <section class="card" data-category="steps">
       <h2><span>ステップ</span><span class="mark">＋</span></h2>
       <div class="body">
+        <h3>STEP03 — 2026-07-19</h3>
+        <ol>
+          <li><code>03-local-crud/BRIEF.md</code> に買い物リストの目的・画面・操作を記入</li>
+          <li>「画面」と「操作」の書き分けを整理（名詞／動詞）</li>
+          <li>ステータス管理・購入メモ・比較をBRIEFへ反映して実装</li>
+          <li>リスト追加日・購入日の自動記録と商品URLを追加</li>
+          <li>CRUD・リスト移管・再読み込み後の保存をブラウザで確認</li>
+          <li>振り返りサイトをカテゴリー整理し、GitHub Pagesで公開</li>
+          <li><code>RETROSPECTIVE.md</code> と日次学習ログへ学びを記録</li>
+        </ol>
+
         <h3>STEP02 — 2026-07-19</h3>
         <ol>
           <li><code>02-interactive-tool/BRIEF.md</code> に目的・問題・操作・完了条件を記入</li>
@@ -300,8 +340,8 @@
           <li>ブラウザで公開結果を確認</li>
         </ol>
 
-        <h3>STEP03 — 次回予定</h3>
-        <p><code>03-local-crud</code> のBRIEFを記入し、追加・編集・削除と、再読み込み後もデータが残る仕組みを学ぶ。</p>
+        <h3>STEP04 — 次回予定</h3>
+        <p><code>04-deployed-app</code> のBRIEFを記入し、主要機能3つ・README・デモURL付きで公開できるアプリを目指す。</p>
       </div>
     </section>
 
@@ -322,6 +362,10 @@
             <tr><td>状態</td><td>現在の問題番号や選んだ回答など、操作によって変わる情報</td></tr>
             <tr><td>イベント</td><td>クリックなどをきっかけに処理を実行する仕組み</td></tr>
             <tr><td>初期化</td><td>回答や問題番号を最初の状態へ戻すこと</td></tr>
+            <tr><td>CRUD</td><td>追加・表示・編集・削除の4操作</td></tr>
+            <tr><td>localStorage</td><td>ブラウザ内にデータを残す仕組み。再読み込み後も使える</td></tr>
+            <tr><td>ステータス</td><td>未購入／検討中／購入完了など、今の状態を表す区分</td></tr>
+            <tr><td>カテゴリー検索</td><td>成果物・共通ナレッジ・ステップなどで絞り込んで探すこと</td></tr>
             <tr><td>README</td><td>プロジェクトの入口の説明書</td></tr>
             <tr><td>BRIEF</td><td>作る前に目的・内容・完了条件・やらないことを決める仕様書</td></tr>
             <tr><td>ローカル</td><td>自分のPCの中にある状態</td></tr>
@@ -387,6 +431,13 @@
           <p><span class="label">方針:</span> 基本は推奨・初期値でよい</p>
           <p><span class="label">重要:</span> PATHは3rd-party許可、認証はGit Credential Manager</p>
           <p><span class="label">補足:</span> VS Code Insidersは今回不要。Cursorだけで進められる</p>
+        </div>
+        <div class="stumble">
+          <h4>6. BRIEFの「画面」と「操作」のどちらに書くか迷う</h4>
+          <p><span class="label">症状:</span> やりたいことや項目名を、どちらに書けばよいか判断できない</p>
+          <p><span class="label">原因:</span> 「見える物」と「やること・結果」が同じ文に混ざる</p>
+          <p><span class="label">解決:</span> 画面＝名詞／部品、操作＝動詞／手順→結果、で振り分ける</p>
+          <p><span class="label">補足:</span> 迷ったら「写真に写るか／指を動かすか」で考える</p>
         </div>
       </div>
     </section>
@@ -467,6 +518,12 @@
 
         <h3>公開前の安全確認</h3>
         <p><code>公開・push前に、メールアドレス、パスワード、APIキー、認証コード、個人情報が含まれていないか確認して。問題があればpushせず報告して。</code></p>
+
+        <h3>BRIEFの画面と操作を整理する</h3>
+        <p><code>BRIEFの「画面」と「操作」を分けて整理して。画面は見える物、操作はやること→結果。実装はまだしないで。</code></p>
+
+        <h3>追加要件をBRIEFに追記してから実装する</h3>
+        <p><code>次の要件をBRIEFに追記してから実装して。（要件）。完了条件も更新して。</code></p>
       </div>
     </section>
 
@@ -478,7 +535,7 @@
           <tbody>
             <tr><td>学習ガイド</td><td><code>docs/</code></td></tr>
             <tr><td>日次の学び</td><td><code>docs/learning-log/日付.md</code></td></tr>
-            <tr><td>振り返りサイト（非公開）</td><td><code>学習の振り返り/</code></td></tr>
+            <tr><td>振り返りサイト</td><td><code>学習の振り返り/</code>（明示依頼時は個別公開可）</td></tr>
             <tr><td>実践課題</td><td><code>projects/番号-英語名/</code></td></tr>
             <tr><td>課題の仕様／振り返り</td><td>各課題の <code>BRIEF.md</code> / <code>RETROSPECTIVE.md</code></td></tr>
           </tbody>
@@ -501,7 +558,7 @@
       </div>
     </section>
 
-    <div class="next">次回の1手：03-local-crud のBRIEFを自分の言葉で埋め、追加・編集・削除と、再読み込み後もデータが残る仕組みを学ぶ。</div>
+    <div class="next">次回の1手：04-deployed-app のBRIEFを自分の言葉で埋め、主要機能3つ・README・デモURL付きで公開できるアプリを目指す。</div>
 
     <div class="warn">
       <strong>プライバシーのメモ：</strong>
