@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>学習の振り返り｜バイブコーディング</title>
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --card: #ffffff;
+      --ink: #1f2421;
+      --sub: #5a615b;
+      --accent: #2c4a3e;
+      --accent-soft: #e5ede8;
+      --line: #e2ddd3;
+      --warn-bg: #fff4e5;
+      --warn-line: #f0c489;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+    }
+
+    header {
+      background: var(--accent);
+      color: #f3efe6;
+      padding: 2rem 1.25rem 1.75rem;
+    }
+
+    header .wrap { max-width: 52rem; margin: 0 auto; }
+
+    header h1 {
+      margin: 0 0 0.4rem;
+      font-size: clamp(1.4rem, 4.5vw, 2rem);
+    }
+
+    header p { margin: 0; opacity: 0.9; font-size: 0.95rem; }
+
+    main {
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    .toolbar input {
+      flex: 1 1 14rem;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--line);
+      border-radius: 0.6rem;
+      font-size: 1rem;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--accent);
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .chip:hover { background: var(--accent-soft); }
+
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.75rem 0 1.25rem;
+    }
+
+    .category-chip {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--accent);
+      padding: 0.55rem 0.85rem;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .category-chip:hover,
+    .category-chip.is-active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .category-note {
+      margin: 0;
+      color: var(--sub);
+      font-size: 0.88rem;
+    }
+
+    section.card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 0.9rem;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+
+    section.card > h2 {
+      margin: 0;
+      padding: 1rem 1.1rem;
+      font-size: 1.05rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    section.card > h2 .mark { color: var(--accent); font-weight: 700; }
+
+    .body {
+      padding: 0 1.1rem 1.1rem;
+      border-top: 1px solid var(--line);
+    }
+
+    section.card.closed .body { display: none; }
+
+    h3 { margin: 1.1rem 0 0.4rem; font-size: 0.98rem; color: var(--accent); }
+
+    ul, ol { margin: 0.3rem 0 0.6rem; padding-left: 1.3rem; }
+
+    li { margin-bottom: 0.3rem; }
+
+    .meta a { color: #1a4d7c; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.4rem 0 0.6rem;
+      font-size: 0.94rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: var(--accent-soft); }
+
+    code {
+      background: #f0ede6;
+      padding: 0.1rem 0.35rem;
+      border-radius: 0.35rem;
+      font-size: 0.9em;
+    }
+
+    .flow {
+      background: var(--accent-soft);
+      border-radius: 0.6rem;
+      padding: 0.7rem 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stumble {
+      border: 1px solid var(--line);
+      border-radius: 0.7rem;
+      padding: 0.7rem 0.9rem;
+      margin-top: 0.7rem;
+    }
+
+    .stumble h4 { margin: 0 0 0.35rem; font-size: 0.96rem; }
+
+    .stumble .label { color: var(--sub); font-weight: 700; }
+
+    .warn {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-line);
+      border-radius: 0.7rem;
+      padding: 0.8rem 0.95rem;
+      margin-top: 1rem;
+    }
+
+    .next {
+      background: var(--accent);
+      color: #f3efe6;
+      border-radius: 0.7rem;
+      padding: 0.9rem 1rem;
+      margin-top: 1rem;
+      font-weight: 700;
+    }
+
+    footer {
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 0 1.25rem 3rem;
+      color: var(--sub);
+      font-size: 0.85rem;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>学習の振り返り</h1>
+      <p>バイブコーディング学習ノート ／ 成果と共通ナレッジの公開用まとめ</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="キーワードで探す（例: push, エラー, CSS）">
+      <button class="chip" data-action="open">すべて開く</button>
+      <button class="chip" data-action="close">すべて閉じる</button>
+    </div>
+
+    <p class="category-note">カテゴリーを選ぶと、該当する記録だけを表示します。キーワード検索との併用もできます。</p>
+    <nav class="category-filter" aria-label="カテゴリーで絞り込む">
+      <button class="category-chip is-active" data-category="all">すべて</button>
+      <button class="category-chip" data-category="outputs">📂 成果物</button>
+      <button class="category-chip" data-category="knowledge">📂 共通ナレッジ</button>
+      <button class="category-chip" data-category="steps">📂 ステップ別学習</button>
+    </nav>
+
+    <section class="card" data-category="outputs">
+      <h2><span>2026-07-19の成果：問い合わせ対応 ○×クイズ</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <p class="meta">2026-07-19 ／ BRIEFを先に書き、JavaScriptで画面が変わる全5問の○×クイズを作った。</p>
+        <ul>
+          <li>作ったもの: クライアントサクセスセンターの問い合わせ対応を学ぶ○×クイズ</li>
+          <li>実装した操作: 開始、回答、理由表示、前・次・トップへの移動、採点、再挑戦</li>
+          <li>確認できたこと: 全操作が動き、再読み込みすると初期状態へ戻る</li>
+          <li>保存場所: <code>projects/02-interactive-tool/</code>（ローカルのみ）</li>
+        </ul>
+        <h3>今回理解した役割</h3>
+        <ul>
+          <li><code>index.html</code>: 文章やボタンを配置するページの骨格</li>
+          <li><code>styles.css</code>: 色、余白、ボタンの光る効果などの見た目</li>
+          <li><code>app.js</code>: 回答記録、正誤判定、画面移動、採点などの動き</li>
+        </ul>
+        <h3>成功の目印</h3>
+        <p>開始から5問の回答・採点まで進め、正解数と各問題の結果が表示された。前の質問とトップ画面にも戻れた。</p>
+        <h3>効いた指示</h3>
+        <p><code>projects/02-interactive-tool の BRIEF.md を読んで実装して。完了条件をすべて満たし、やらないことは作らない。</code></p>
+        <p>詳しい記録: <code>docs/learning-log/2026-07-19.md</code></p>
+      </div>
+    </section>
+
+    <section class="card" data-category="outputs">
+      <h2><span>2026-07-18の成果：自己紹介サイト</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <p class="meta">2026-07-18 ／ プログラミング未経験から、Cursorで自己紹介サイトを作り、GitHub Pagesで公開した。</p>
+        <ul>
+          <li>作ったもの: 名前・経歴・好きなこと・連絡先を載せた1ページ</li>
+          <li>できるようになったこと: 修正を <code>add → commit → push</code> で公開サイトへ反映</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card" data-category="steps">
+      <h2><span>ステップ</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <h3>STEP02 — 2026-07-19</h3>
+        <ol>
+          <li><code>02-interactive-tool/BRIEF.md</code> に目的・問題・操作・完了条件を記入</li>
+          <li>BRIEFを基に <code>index.html</code>、<code>styles.css</code>、<code>app.js</code> を実装</li>
+          <li>ブラウザで「クイズを始める」から全5問へ回答</li>
+          <li>回答後に正解・不正解と理由が表示されることを確認</li>
+          <li>前の質問、トップ画面、次の問題への移動を確認</li>
+          <li>採点画面で正解数と全問の回答結果を確認</li>
+          <li>再読み込みすると初期状態へ戻ることを確認</li>
+          <li><code>RETROSPECTIVE.md</code> と日次学習ログへ学びを記録</li>
+        </ol>
+
+        <h3>STEP01 — 2026-07-18</h3>
+        <ol>
+          <li>学習ロードマップと5つの実践課題を用意</li>
+          <li>BRIEFに目的・掲載内容・完了条件を記入</li>
+          <li>CursorにBRIEFを読ませて index.html を実装</li>
+          <li>HTMLとCSSの役割を確認</li>
+          <li>GitHubアカウントと公開リポジトリを作成</li>
+          <li>index.html をGitHubへアップロード</li>
+          <li>GitHub Pagesを有効化して公開URLを取得</li>
+          <li>Git for Windowsをインストール</li>
+          <li>Gitの名前・メール・GitHub認証を設定</li>
+          <li>ローカルフォルダとGitHubを接続</li>
+          <li>文言・URLを修正し、commit・pushで反映</li>
+          <li>ブラウザで公開結果を確認</li>
+        </ol>
+
+        <h3>STEP03 — 次回予定</h3>
+        <p><code>03-local-crud</code> のBRIEFを記入し、追加・編集・削除と、再読み込み後もデータが残る仕組みを学ぶ。</p>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>用語（初心者向けのたとえ）</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <table>
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td>Cursor</td><td>AIと会話しながらファイルを読み書きできる開発アプリ</td></tr>
+            <tr><td>ワークスペース</td><td>Cursorでいま開いている作業フォルダ</td></tr>
+            <tr><td>エディタ</td><td>ファイルの中身を表示・編集する場所</td></tr>
+            <tr><td>ターミナル</td><td>文字の命令でPCやGitに直接指示する場所。チャットとは別</td></tr>
+            <tr><td>コマンド</td><td>ターミナルに打つ短い命令文</td></tr>
+            <tr><td>HTML</td><td>ページの文章と骨組み</td></tr>
+            <tr><td>CSS</td><td>色・文字・余白などの見た目</td></tr>
+            <tr><td>JavaScript</td><td>ボタン操作、判定、画面切り替えなどの動き</td></tr>
+            <tr><td>状態</td><td>現在の問題番号や選んだ回答など、操作によって変わる情報</td></tr>
+            <tr><td>イベント</td><td>クリックなどをきっかけに処理を実行する仕組み</td></tr>
+            <tr><td>初期化</td><td>回答や問題番号を最初の状態へ戻すこと</td></tr>
+            <tr><td>README</td><td>プロジェクトの入口の説明書</td></tr>
+            <tr><td>BRIEF</td><td>作る前に目的・内容・完了条件・やらないことを決める仕様書</td></tr>
+            <tr><td>ローカル</td><td>自分のPCの中にある状態</td></tr>
+            <tr><td>Git</td><td>ファイルの変更履歴を記録する仕組み</td></tr>
+            <tr><td>GitHub</td><td>Gitの履歴やファイルをネット上で保管・共有する場所</td></tr>
+            <tr><td>GitHub Pages</td><td>GitHub上のHTMLを公開Webサイトとして配信する機能</td></tr>
+            <tr><td>リポジトリ</td><td>1つのプロジェクトと履歴をまとめる保管箱</td></tr>
+            <tr><td>Codespaces</td><td>GitHub上の一時的なクラウド作業環境。公開サイトとは別</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>公開の基本動作（Gitの流れ）</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <p class="flow">編集 → Ctrl+S → git status → git add → git commit → git push</p>
+        <table>
+          <thead><tr><th>操作</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><code>Ctrl + S</code></td><td>編集中の内容をPCのファイルへ保存</td></tr>
+            <tr><td><code>git status</code></td><td>変更されたファイルと現在地を確認</td></tr>
+            <tr><td><code>git add index.html</code></td><td>次の記録に含めるファイルを登録</td></tr>
+            <tr><td><code>git commit -m "理由"</code></td><td>変更を理由付きで履歴に記録</td></tr>
+            <tr><td><code>git push</code></td><td>記録をGitHubへ送信</td></tr>
+          </tbody>
+        </table>
+        <p>公開ページはpush後すぐでなく、反映に1〜数分かかることがある。古い表示なら <code>Ctrl + F5</code> で強制再読み込み。</p>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>つまずき事例（症状 → 原因 → 解決）</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <div class="stumble">
+          <h4>1. 画面に見えるのにGitHubにファイルが無い</h4>
+          <p><span class="label">症状:</span> git status は変更なし、ls に README しか出ない</p>
+          <p><span class="label">原因:</span> エディタの内容が保存されていなかった</p>
+          <p><span class="label">解決:</span> Ctrl+S で保存、またはGitHubのUpload filesで直接アップロード</p>
+          <p><span class="label">補足:</span> 「見えている」と「保存済み」は別</p>
+        </div>
+        <div class="stumble">
+          <h4>2. commitしても nothing to commit</h4>
+          <p><span class="label">症状:</span> modified と出るのに記録されない</p>
+          <p><span class="label">原因:</span> git add をしていなかった</p>
+          <p><span class="label">解決:</span> add → commit → push の順で実行</p>
+          <p><span class="label">補足:</span> add は「今回の記録に入れるものを選ぶ」工程</p>
+        </div>
+        <div class="stumble">
+          <h4>3. cd でパスが見つからない</h4>
+          <p><span class="label">症状:</span> パスに 01-profile-site が二重に続く</p>
+          <p><span class="label">原因:</span> すでにそのフォルダにいるのに同じ cd を繰り返した</p>
+          <p><span class="label">解決:</span> ターミナル左端の現在地を確認してから移動</p>
+        </div>
+        <div class="stumble">
+          <h4>4. pushしたのにページが変わらない</h4>
+          <p><span class="label">原因候補:</span> 反映待ち／ブラウザのキャッシュ／push前</p>
+          <p><span class="label">解決:</span> push成功を確認 → 数分待つ → Ctrl+F5</p>
+          <p><span class="label">目印:</span> push結果に <code>main -&gt; main</code> が出る</p>
+        </div>
+        <div class="stumble">
+          <h4>5. Gitのセットアップ項目が多くて迷う</h4>
+          <p><span class="label">方針:</span> 基本は推奨・初期値でよい</p>
+          <p><span class="label">重要:</span> PATHは3rd-party許可、認証はGit Credential Manager</p>
+          <p><span class="label">補足:</span> VS Code Insidersは今回不要。Cursorだけで進められる</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>Cursorの使い方</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <ol>
+          <li>Cursorで作業フォルダを開く</li>
+          <li>先にBRIEFを書く（目的と完了条件）</li>
+          <li>Cursorに「BRIEFを読み実装。やらないことは作らない」と依頼</li>
+          <li>自分でブラウザ表示を確認</li>
+          <li>GitHubで公開リポジトリを作る</li>
+          <li>最初はUpload filesでも index.html を置く</li>
+          <li>GitHub Pagesを main と / (root) で有効化</li>
+          <li>慣れたらGitを導入し add → commit → push へ</li>
+          <li>完成後は振り返りを書く</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>AI利用量を抑える考え方</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <ul>
+          <li>新規設計・初回セットアップ・原因不明のエラーはAIに任せる価値が高い</li>
+          <li>文言やURLの1箇所変更は自分で編集できる</li>
+          <li>自分で直したあとは「commit・push・確認だけ」と範囲を絞って依頼</li>
+          <li>Python等の自動化は、同じ処理を何度も繰り返す段階で効く</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>セキュリティ設定で学んだこと</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <h3>実施したこと</h3>
+        <ul>
+          <li>今後のコミット用メールをGitHubのnoreplyアドレスへ変更</li>
+          <li>メールアドレスを非公開にする設定をOn</li>
+          <li>個人メールを含むpushをGitHub側でブロックする設定をOn</li>
+          <li>認証アプリによる2段階認証（2FA）を有効化</li>
+          <li>リカバリーコードを安全な場所に保存</li>
+          <li>画面共有に写ったコードを再発行し、古いコードを無効化</li>
+        </ul>
+        <h3>覚えておくこと</h3>
+        <table>
+          <thead><tr><th>項目</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td>noreplyメール</td><td>個人メールを公開せず、GitHubアカウントとコミットを結びつける</td></tr>
+            <tr><td>2段階認証</td><td>パスワード以外の確認を追加し、乗っ取りを防ぎやすくする</td></tr>
+            <tr><td>リカバリーコード</td><td>認証端末を失ったときに使う1回限りの復旧手段</td></tr>
+          </tbody>
+        </table>
+        <div class="warn">
+          パスワード、認証コード、リカバリーコード、APIキーは、チャット・スクリーンショット・GitHubに載せない。写った場合は再発行して古いものを無効化する。
+        </div>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>よく使う一言プロンプト</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <h3>BRIEFから始める</h3>
+        <p><code>〇〇を作りたい。まずBRIEF.mdのひな型だけ作って。目的・画面・操作・完了条件・やらないことを含め、まだ実装しないで。</code></p>
+
+        <h3>BRIEFどおりに実装する</h3>
+        <p><code>（対象フォルダ）のBRIEF.mdを読んで実装して。完了条件を満たし、やらないことは作らない。最後にブラウザで確認して。</code></p>
+
+        <h3>小さな変更だけ頼む</h3>
+        <p><code>（対象ファイル）の（対象箇所）だけを（変更内容）に変えて。ほかは触らず、変更後に確認して。</code></p>
+
+        <h3>GitHub反映だけ頼む</h3>
+        <p><code>（対象フォルダ）の変更内容を確認し、秘密情報がないことを確認してから、理由が分かる日本語メッセージでcommit・pushし、公開結果も確認して。</code></p>
+
+        <h3>質問だけする</h3>
+        <p><code>実装・ファイル変更はしないで質問だけ。〇〇について初心者向けに、今のプロジェクトを例に説明して。</code></p>
+
+        <h3>公開前の安全確認</h3>
+        <p><code>公開・push前に、メールアドレス、パスワード、APIキー、認証コード、個人情報が含まれていないか確認して。問題があればpushせず報告して。</code></p>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>ファイルの置き場（保管ルール）</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <table>
+          <thead><tr><th>種類</th><th>置き場</th></tr></thead>
+          <tbody>
+            <tr><td>学習ガイド</td><td><code>docs/</code></td></tr>
+            <tr><td>日次の学び</td><td><code>docs/learning-log/日付.md</code></td></tr>
+            <tr><td>振り返りサイト（非公開）</td><td><code>学習の振り返り/</code></td></tr>
+            <tr><td>実践課題</td><td><code>projects/番号-英語名/</code></td></tr>
+            <tr><td>課題の仕様／振り返り</td><td>各課題の <code>BRIEF.md</code> / <code>RETROSPECTIVE.md</code></td></tr>
+          </tbody>
+        </table>
+        <p>フォルダ名は英語、説明文は日本語。新しいチャットでも <code>.cursor/rules/</code> のルールが自動適用される。</p>
+      </div>
+    </section>
+
+    <section class="card" data-category="knowledge">
+      <h2><span>学習終了時の一言テンプレ</span><span class="mark">＋</span></h2>
+      <div class="body">
+        <h3>基本版</h3>
+        <p><code>今日の学びを蓄積して。今日実施したこと、学んだ用語、つまずいた症状・原因・解決方法、成功を判断した表示、効いた指示、初心者向け補足、次回の1手を、日付ごとの学習ログとローカル専用の振り返りサイトに追記して。秘密情報や個人情報は記録・公開しないで。GitHubへのpushはしないで。</code></p>
+
+        <h3>短縮版</h3>
+        <p><code>今日の学びを、秘密情報を除いて日次ログとローカル振り返りサイトに蓄積して。GitHubには上げないで。</code></p>
+
+        <h3>公開成果もある場合</h3>
+        <p><code>今日の学びをローカルに蓄積して。公開してよい成果物だけ、個人情報・秘密情報がないことを確認してからGitHubに反映して。学習履歴そのものは公開しないで。</code></p>
+      </div>
+    </section>
+
+    <div class="next">次回の1手：03-local-crud のBRIEFを自分の言葉で埋め、追加・編集・削除と、再読み込み後もデータが残る仕組みを学ぶ。</div>
+
+    <div class="warn">
+      <strong>プライバシーのメモ：</strong>
+      このページは学習の振り返り用の公開ノートです。パスワード、認証コード、リカバリーコード、実メール、APIキーは載せません。日次の詳細ログ（<code>docs/learning-log/</code>）はローカル専用のままです。
+    </div>
+  </main>
+
+  <footer>
+    このノートは学習の記録用です。将来「未経験者向けの学習ガイドサービス」を作るための素材として少しずつ育てます。
+  </footer>
+
+  <script>
+    const cards = Array.from(document.querySelectorAll('section.card'));
+
+    cards.forEach((card) => {
+      const head = card.querySelector('h2');
+      const mark = card.querySelector('.mark');
+      head.addEventListener('click', () => {
+        card.classList.toggle('closed');
+        mark.textContent = card.classList.contains('closed') ? '＋' : '−';
+      });
+    });
+
+    document.querySelectorAll('.chip[data-action]').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const open = chip.dataset.action === 'open';
+        cards.forEach((card) => {
+          card.classList.toggle('closed', !open);
+          card.querySelector('.mark').textContent = open ? '−' : '＋';
+        });
+      });
+    });
+
+    const search = document.getElementById('search');
+    const categoryChips = Array.from(document.querySelectorAll('.category-chip'));
+    let activeCategory = 'all';
+
+    function applyFilters() {
+      const q = search.value.trim().toLowerCase();
+      cards.forEach((card) => {
+        const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+        const matchesKeyword = !q || card.textContent.toLowerCase().includes(q);
+        const visible = matchesCategory && matchesKeyword;
+        card.classList.toggle('hidden', !visible);
+        if (visible && q) {
+          card.classList.remove('closed');
+          card.querySelector('.mark').textContent = '−';
+        }
+      });
+    }
+
+    categoryChips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        activeCategory = chip.dataset.category;
+        categoryChips.forEach((item) => item.classList.toggle('is-active', item === chip));
+        applyFilters();
+      });
+    });
+
+    search.addEventListener('input', applyFilters);
+  </script>
+</body>
+</html>
